@@ -178,6 +178,10 @@ int main(void)
                 // we need to release object on our own.
                 prog_sun.release();
                 prog_sun = new_prog;
+                prog_earth.release();
+                prog_earth = new_prog;
+                prog_moon.release();
+                prog_moon = new_prog;
                 
             }
             ImGui::End();
