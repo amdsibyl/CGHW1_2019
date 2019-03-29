@@ -40,7 +40,7 @@ int main(void)
     if(!gladLoadGL()) {
         exit(EXIT_FAILURE);
     }
- /*
+ 
     // Setup Dear ImGui binding
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -53,7 +53,7 @@ int main(void)
 
     // Setup style
     ImGui::StyleColorsDark();
- */   
+   
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -109,7 +109,7 @@ int main(void)
         prog_sun["vp"] = glm::perspective(45/180.0f*3.1415926f, 640.0f/480.0f, 0.1f, 10000.0f)*
             glm::lookAt(glm::vec3{0, 0, 10}, glm::vec3{0, 0, 0}, glm::vec3{0, 1, 0});
         prog_sun["model"] = glm::rotate(glm::mat4(1.0f), 
-            float(glfwGetTime()*SUN_rotate)*3.1415926f/180.0f, SUN_rotate_axis);
+            (float(glfwGetTime()*SUN_rotate)*3.1415926f + degree)/180.0f, SUN_rotate_axis);
         prog_sun["object_color"] = object_color;
 
         prog_sun["text"] = 0;
@@ -122,7 +122,7 @@ int main(void)
             glm::lookAt(glm::vec3{0, 0, 10}, glm::vec3{0, 0, 0}, glm::vec3{0, 1, 0});
         // Revolve around SUN
         glm::mat4 ViewTranslate_earth = glm::translate(glm::rotate(glm::scale(glm::mat4(1.0f), glm::vec3(0.4f)), 
-            float(glfwGetTime()*SUN_rotate)*3.1415926f/180.0f, EARTH_revolve_axis), glm::vec3(-8.0f, 0.0f, 0.0f));
+            (float(glfwGetTime()*SUN_rotate)+ degree)*3.1415926f/180.0f, EARTH_revolve_axis), glm::vec3(-8.0f, 0.0f, 0.0f));
         prog_earth["model"] = glm::rotate(ViewTranslate_earth, float(glfwGetTime()*EARTH_rotate)*3.1415926f/180.0f, 
             EARTH_rotate_axis);
         prog_earth["object_color"] = object_color;
@@ -137,7 +137,7 @@ int main(void)
             glm::lookAt(glm::vec3{0, 0, 10}, glm::vec3{0, 0, 0}, glm::vec3{0, 1, 0});
         // Revolve around EARTH
         glm::mat4 ViewTranslate_moon = glm::translate(glm::rotate(glm::scale(ViewTranslate_earth, glm::vec3(0.5f)), 
-            float(glfwGetTime()*EARTH_rotate)*3.1415926f/180.0f, MOON_revolve_axis), glm::vec3(5.0f, 0.0f, 0.0f));
+            (float(glfwGetTime()*EARTH_rotate)+ degree)*3.1415926f/180.0f, MOON_revolve_axis), glm::vec3(5.0f, 0.0f, 0.0f));
         prog_moon["model"] = glm::rotate(ViewTranslate_moon, float(glfwGetTime()*MOON_rotate)*3.1415926f/180.0f, 
             MOON_rotate_axis);
         prog_moon["object_color"] = object_color;
@@ -149,7 +149,7 @@ int main(void)
 
         glDisable(GL_DEPTH_TEST);
 
-/*
+
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -187,7 +187,7 @@ int main(void)
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-*/
+
         glfwSwapBuffers(window);
             
     }
